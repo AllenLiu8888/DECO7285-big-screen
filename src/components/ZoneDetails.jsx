@@ -21,6 +21,7 @@ const ZoneDetails = () => (
           </div>
           <div className="flex items-center gap-6 text-sm">
             <Stat label="Temp" value={`${zone.temperature}°`} />
+            <Stat label="Comfort" value={zone.comfortIndex} accent="text-limePulse" />
             <Stat label="Hot" value={zone.feedbackHot} accent="text-ember" />
             <Stat label="Cold" value={zone.feedbackCold} accent="text-frost" />
           </div>

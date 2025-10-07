@@ -12,8 +12,13 @@ const TemperatureLegend = () => {
 
   return (
     <div className="flex items-end gap-3">
-      <div className="flex h-24 w-2 flex-col overflow-hidden rounded-full">
-        <span className="h-full w-full bg-gradient-to-b from-[#00C2FF] via-[#FDBA74] to-[#FF5D8F]" />
+      <div className="flex h-28 w-3 flex-col overflow-hidden rounded-full">
+        <span
+          className="h-full w-full"
+          style={{
+            backgroundImage: 'linear-gradient(180deg, #38C0FF 0%, #4ADE80 40%, #FB923C 70%, #FF5D8F 100%)'
+          }}
+        />
       </div>
       <div className="flex flex-col gap-1 text-right text-xs text-slate-400">
         {gradientStops.map((value) => (

@@ -1,121 +1,112 @@
 import React from 'react';
+import floorplanIllustration from '../assets/library-floorplan.svg';
 import { temperatureZones } from '../data/temperatureZones.js';
 import TemperatureLegend from './TemperatureLegend.jsx';
 
 /**
- * Utility mapping zone statuses to accent colors for overlays.
+ * Accent colour palette per comfort status used by gradients and markers.
  */
-const statusStyles = {
-  cold: 'from-[#1B84F3]/90 to-[#1B84F3]/30',
-  cool: 'from-[#38C0FF]/80 to-[#38C0FF]/20',
-  neutral: 'from-[#4ADE80]/70 to-[#4ADE80]/20',
-  warm: 'from-[#FB923C]/80 to-[#FB923C]/20'
+const statusPalette = {
+  cool: { solid: 'rgba(56, 192, 255, 0.75)', soft: 'rgba(56, 192, 255, 0.08)' },
+  neutral: { solid: 'rgba(74, 222, 128, 0.75)', soft: 'rgba(74, 222, 128, 0.08)' },
+  warm: { solid: 'rgba(251, 146, 60, 0.75)', soft: 'rgba(251, 146, 60, 0.08)' },
+  hot: { solid: 'rgba(255, 93, 143, 0.82)', soft: 'rgba(255, 93, 143, 0.1)' }
 };
 
 /**
- * HeatMap visualises the library layout with gradient regions representing temperature.
+ * HeatMap visualises the library layout with a blueprint background and radial glows.
  */
-const HeatMap = () => (
-  <section className="glass-panel relative overflow-hidden rounded-3xl border border-slate-800/50 p-6">
-    <div className="flex items-center justify-between">
-      <div>
-        <h2 className="text-2xl font-semibold text-white">Comfort Heat Map</h2>
-        <p className="text-sm text-slate-400">Real-time climate + live feedback blend</p>
+const HeatMap = ({ footer }) => (
+  <section className="glass-panel rounded-3xl border border-slate-800/50 p-6">
+    <div className="flex flex-wrap items-end justify-between gap-6">
+      <div className="min-w-[18rem] flex-1">
+        <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">Comfort Heat Map</p>
+        <h2 className="mt-2 text-4xl font-semibold text-white">Level 3 · Microclimate Overview</h2>
+        <p className="mt-3 max-w-xl text-sm text-slate-400">
+          Overlay combines sensor telemetry and button feedback to reveal today&apos;s hot and cold spots.
+        </p>
       </div>
       <TemperatureLegend />
     </div>
 
-    <div className="mt-6 aspect-[5/3] w-full overflow-hidden rounded-2xl border border-slate-800/60 bg-slate-900/60">
-      <div className="map-gradient relative h-full w-full">
-        <div className="absolute inset-0 grid grid-cols-9 grid-rows-6 gap-2 p-6">
+    <div className="mt-6 space-y-6">
+      <div
+        className="relative overflow-hidden rounded-[32px] border border-slate-800/60 bg-slate-900/70"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(15,23,42,0.9), rgba(15,23,42,0.6)), url(${floorplanIllustration})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="relative aspect-[5/2] w-full">
           {temperatureZones.map((zone) => (
-            <article
-              key={zone.id}
-              className={`relative rounded-xl border border-white/10 bg-gradient-to-br ${
-                statusStyles[zone.status]
-              } transition-transform hover:scale-[1.02]`}
-              style={{
-                gridColumn: `${zone.grid.colStart} / span ${zone.grid.colSpan}`,
-                gridRow: `${zone.grid.rowStart} / span ${zone.grid.rowSpan}`
-              }}
-            >
-              <div className="flex h-full flex-col justify-between p-3">
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
-                    {zone.label}
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold text-white">{zone.temperature}°</p>
-                </div>
-                <div className="flex items-center justify-between text-xs text-white/80">
-                  <span className="flex items-center gap-2">
-                    <span className="inline-flex h-2 w-2 rounded-full bg-white/70" />
-                    {zone.seats} seats
-                  </span>
-                  <span className="flex items-center gap-3">
-                    <span className="flex items-center gap-1">
-                      <span className="inline-flex h-2 w-2 rounded-full bg-ember" />
-                      Hot {zone.feedbackHot}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="inline-flex h-2 w-2 rounded-full bg-frost" />
-                      Cold {zone.feedbackCold}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </article>
+            <React.Fragment key={zone.id}>
+              <ZoneGlow zone={zone} />
+              <ZoneMarker zone={zone} />
+            </React.Fragment>
           ))}
+          <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/5" />
         </div>
-        <DecorativeOverlays />
       </div>
+      {footer}
     </div>
   </section>
 );
 
 /**
- * DecorativeOverlays render icons and structural hints for the map layout.
+ * ZoneGlow renders a soft radial gradient sized by the configured radius.
  */
-const DecorativeOverlays = () => (
-  <>
-    <div className="absolute left-6 top-6 flex items-center gap-2 text-sm font-medium text-white/80">
-      <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-limePulse" />
-      Entrance
-    </div>
-    <div className="absolute bottom-6 left-6 flex items-center gap-3 text-xs text-white/60">
-      <span className="inline-flex items-center gap-2">
-        <span className="inline-flex h-3 w-3 items-center justify-center rounded-full border border-white/40 text-[10px]">
-          A
-        </span>
-        Air Vent
-      </span>
-      <span className="inline-flex items-center gap-2">
-        <span className="inline-flex h-3 w-3 items-center justify-center rounded-full border border-white/40 text-[10px]">
-          W
-        </span>
-        Window
-      </span>
-    </div>
-    {[{ x: '18%', y: '22%' }, { x: '42%', y: '18%' }, { x: '62%', y: '30%' }, { x: '35%', y: '70%' }].map(
-      (marker, index) => (
-        <div
-          key={`vent-${marker.x}-${marker.y}`}
-          className="absolute flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200/50 bg-cyan-500/20 text-xs text-cyan-100"
-          style={{ left: marker.x, top: marker.y }}
-        >
-          A{index + 1}
-        </div>
-      )
-    )}
-    {[{ x: '78%', y: '25%' }, { x: '82%', y: '55%' }, { x: '15%', y: '65%' }].map((marker, index) => (
-      <div
-        key={`window-${marker.x}-${marker.y}`}
-        className="absolute flex h-8 w-8 items-center justify-center rounded-full border border-amber-200/50 bg-amber-500/20 text-xs text-amber-100"
-        style={{ left: marker.x, top: marker.y }}
-      >
-        W{index + 1}
+const ZoneGlow = ({ zone }) => {
+  const palette = statusPalette[zone.status] ?? statusPalette.neutral;
+  const diameter = zone.radius;
+  const offset = diameter / 2;
+
+  return (
+    <div
+      className="pointer-events-none absolute mix-blend-screen blur-[2px]"
+      style={{
+        left: `calc(${zone.position.x}% - ${offset}px)`,
+        top: `calc(${zone.position.y}% - ${offset}px)`,
+        width: `${diameter}px`,
+        height: `${diameter}px`,
+        background: `radial-gradient(circle at center, ${palette.solid} 0%, ${palette.solid} 35%, ${palette.soft} 70%, transparent 100%)`
+      }}
+    />
+  );
+};
+
+/**
+ * ZoneMarker draws the node for each sensor cluster along with temperature text.
+ */
+const ZoneMarker = ({ zone }) => {
+  const palette = statusPalette[zone.status] ?? statusPalette.neutral;
+
+  return (
+    <div
+      className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3"
+      style={{ left: `${zone.position.x}%`, top: `${zone.position.y}%` }}
+    >
+      <div className="rounded-full border border-white/40 bg-slate-950/80 px-4 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white/70">
+        {zone.id}
       </div>
-    ))}
-  </>
-);
+      <div className="glass-panel flex flex-col items-center rounded-2xl border border-white/30 bg-slate-950/70 px-6 py-4 text-center shadow-xl">
+        <span className="text-sm font-medium text-white/70">{zone.label}</span>
+        <span className="mt-1 text-3xl font-semibold text-white">{zone.temperature.toFixed(1)}°C</span>
+        <span className="mt-2 flex items-center gap-2 text-xs text-slate-300">
+          <span className="inline-flex items-center gap-1">
+            <span className="inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: palette.solid }} />
+            Comfort {zone.comfortIndex}
+          </span>
+          <span className="inline-flex items-center gap-1 text-ember">
+            Hot {zone.feedbackHot}
+          </span>
+          <span className="inline-flex items-center gap-1 text-frost">
+            Cold {zone.feedbackCold}
+          </span>
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export default HeatMap;

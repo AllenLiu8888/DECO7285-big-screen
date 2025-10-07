@@ -12,7 +12,12 @@ const ScopePanel = () => (
     </div>
     <div className="mt-4 flex flex-col gap-3">
       <div className="h-3 w-full overflow-hidden rounded-full bg-slate-800/80">
-        <div className="h-full w-full bg-gradient-to-r from-[#00C2FF] via-[#FDBA74] to-[#FF5D8F]" />
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: 'linear-gradient(90deg, #38C0FF 0%, #4ADE80 35%, #FB923C 68%, #FF5D8F 100%)'
+          }}
+        />
       </div>
       <div className="flex items-center justify-between text-xs text-slate-400">
         {Array.from(

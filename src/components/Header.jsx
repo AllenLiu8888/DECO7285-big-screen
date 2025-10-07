@@ -11,12 +11,12 @@ const Header = () => {
   const offlineCount = sensorHealth.filter((sensor) => sensor.status !== 'online').length;
 
   return (
-    <header className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-      <div>
+    <header className="flex flex-col gap-6 lg:flex-row lg:flex-nowrap lg:items-end lg:gap-10">
+      <div className="min-w-[20rem] flex-1">
         <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">
           Library ComfortMap — Public Display
         </p>
-        <h1 className="mt-2 text-4xl font-semibold text-white">
+        <h1 className="mt-2 text-4xl font-semibold text-white whitespace-nowrap">
           Building A · Level 3
         </h1>
       </div>

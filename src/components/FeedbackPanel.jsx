@@ -1,52 +1,42 @@
 import React from 'react';
-import { feedbackSnapshots } from '../data/temperatureZones.js';
+import { feedbackToday } from '../data/temperatureZones.js';
 
 /**
- * FeedbackPanel visualises aggregated hot/cold interactions with contextual tags.
+ * FeedbackPanel shows compact statistics for today directly beneath the map.
  */
 const FeedbackPanel = () => (
-  <section className="glass-panel rounded-3xl p-6">
-    <h3 className="text-lg font-semibold text-white">Live Feedback</h3>
-    <p className="text-sm text-slate-400">Student button presses merged with sensor data.</p>
+  <section className="rounded-3xl border border-slate-800/60 bg-slate-900/60 p-5">
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h3 className="text-base font-semibold text-white">Live Feedback — Today</h3>
+        <p className="text-xs text-slate-400">Sensor pings merged with student button presses.</p>
+      </div>
+      <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Refreshed 5 min ago</span>
+    </div>
 
-    <div className="mt-4 space-y-4">
-      {feedbackSnapshots.map((snapshot) => (
+    <div className="mt-4 flex flex-wrap gap-4">
+      {feedbackToday.map((stat) => (
         <article
-          key={snapshot.id}
-          className="rounded-2xl border border-slate-800/60 bg-slate-900/40 p-4"
+          key={stat.id}
+          className="flex min-w-[160px] flex-1 items-center justify-between gap-4 rounded-2xl border border-slate-800/70 bg-slate-950/70 px-4 py-3"
         >
-          <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium text-white">{snapshot.label}</h4>
-            <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Alert Rule</span>
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{stat.label}</p>
+            <p className="mt-1 text-xl font-semibold text-white">{stat.total}</p>
           </div>
-          <div className="mt-3 flex items-center justify-between text-sm">
-            <div className="flex items-center gap-4">
-              <Badge color="bg-ember" label="Hot" value={snapshot.hotCount} />
-              <Badge color="bg-frost" label="Cold" value={snapshot.coldCount} />
-            </div>
-            <div className="flex flex-wrap gap-2 text-xs text-slate-400">
-              {snapshot.highlightedZones.map((zone) => (
-                <span key={zone} className="rounded-full bg-slate-800/80 px-3 py-1 text-slate-200">
-                  #{zone}
-                </span>
-              ))}
-            </div>
+          <div className="flex flex-col items-end gap-2 text-right">
+            <span
+              className="inline-flex h-2 w-2 rounded-full"
+              style={{ backgroundColor: stat.accentColor }}
+            />
+            <span className="rounded-full bg-white/5 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70">
+              {stat.delta}
+            </span>
           </div>
         </article>
       ))}
     </div>
   </section>
-);
-
-/**
- * Badge renders a rounded statistic chip inside the feedback card.
- */
-const Badge = ({ color, label, value }) => (
-  <span className="flex items-center gap-2 rounded-full bg-slate-800/80 px-4 py-2 text-white">
-    <span className={`inline-flex h-2.5 w-2.5 rounded-full ${color}`} />
-    <span className="text-xs uppercase tracking-[0.2em] text-white/70">{label}</span>
-    <span className="text-lg font-semibold">{value}</span>
-  </span>
 );
 
 export default FeedbackPanel;

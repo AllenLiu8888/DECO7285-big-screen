@@ -1,67 +1,62 @@
 /**
  * Mock data describing the Temperature dashboard heat map.
- * Each zone corresponds to a rectangular group of seats inside the library.
+ * Each zone corresponds to a key location within the library floor plan.
  */
 export const temperatureZones = [
   {
-    id: 'entrance',
-    label: 'Entrance Lobby',
-    temperature: 23,
+    id: 'north-quiet',
+    label: 'North Quiet Desks',
+    temperature: 21.4,
+    comfortIndex: 68,
     status: 'cool',
-    feedbackHot: 1,
-    feedbackCold: 6,
-    seats: 12,
-    grid: { colStart: 1, colSpan: 3, rowStart: 5, rowSpan: 3 }
-  },
-  {
-    id: 'north-study',
-    label: 'North Study Pods',
-    temperature: 20,
-    status: 'cold',
-    feedbackHot: 0,
+    feedbackHot: 2,
     feedbackCold: 9,
-    seats: 18,
-    grid: { colStart: 2, colSpan: 4, rowStart: 2, rowSpan: 2 }
+    position: { x: 24, y: 34 },
+    radius: 240
   },
   {
-    id: 'central-hub',
+    id: 'central-collab',
     label: 'Central Collaboration Hub',
-    temperature: 24,
+    temperature: 23.8,
+    comfortIndex: 74,
     status: 'neutral',
-    feedbackHot: 2,
-    feedbackCold: 2,
-    seats: 20,
-    grid: { colStart: 4, colSpan: 4, rowStart: 4, rowSpan: 3 }
-  },
-  {
-    id: 'south-window',
-    label: 'South Window Row',
-    temperature: 28,
-    status: 'warm',
-    feedbackHot: 8,
-    feedbackCold: 1,
-    seats: 10,
-    grid: { colStart: 7, colSpan: 3, rowStart: 3, rowSpan: 3 }
-  },
-  {
-    id: 'west-stacks',
-    label: 'West Book Stacks',
-    temperature: 22,
-    status: 'cool',
-    feedbackHot: 2,
-    feedbackCold: 4,
-    seats: 14,
-    grid: { colStart: 1, colSpan: 2, rowStart: 2, rowSpan: 3 }
+    feedbackHot: 5,
+    feedbackCold: 3,
+    position: { x: 48, y: 46 },
+    radius: 260
   },
   {
     id: 'makerspace',
-    label: 'Innovation MakerSpace',
-    temperature: 26,
+    label: 'Makerspace Studio',
+    temperature: 25.6,
+    comfortIndex: 59,
     status: 'warm',
-    feedbackHot: 6,
+    feedbackHot: 11,
     feedbackCold: 1,
-    seats: 8,
-    grid: { colStart: 7, colSpan: 3, rowStart: 6, rowSpan: 2 }
+    position: { x: 64, y: 60 },
+    radius: 220
+  },
+  {
+    id: 'window-bay',
+    label: 'East Window Bay',
+    temperature: 26.9,
+    comfortIndex: 53,
+    status: 'hot',
+    feedbackHot: 15,
+    feedbackCold: 0,
+    position: { x: 78, y: 40 },
+    radius: 210
+  },
+  {
+    id: 'south-stacks',
+    label: 'South Book Stacks',
+    temperature: 22.3,
+    comfortIndex: 71,
+    status: 'cool',
+    feedbackHot: 3,
+    feedbackCold: 6,
+    position: { x: 36, y: 68 },
+    radius: 230
   }
 ];
 
@@ -80,26 +75,40 @@ export const sensorHealth = [
  */
 export const temperatureScope = {
   min: 20,
-  max: 32,
-  step: 3
+  max: 30,
+  step: 2
 };
 
 /**
- * Pre-aggregated feedback snapshots for the feedback panel.
+ * Aggregated feedback statistics for today only.
  */
-export const feedbackSnapshots = [
+export const feedbackToday = [
   {
-    id: 'snapshot-1',
-    label: 'Last 15 minutes',
-    hotCount: 14,
-    coldCount: 7,
-    highlightedZones: ['south-window', 'makerspace']
+    id: 'hot-taps',
+    label: 'Hot Reports',
+    total: 36,
+    accentColor: '#FF5D8F',
+    delta: '+8 vs yesterday'
   },
   {
-    id: 'snapshot-2',
-    label: 'Today',
-    hotCount: 56,
-    coldCount: 32,
-    highlightedZones: ['south-window', 'central-hub']
+    id: 'cold-taps',
+    label: 'Cold Reports',
+    total: 19,
+    accentColor: '#38C0FF',
+    delta: '-3 vs yesterday'
+  },
+  {
+    id: 'avg-response',
+    label: 'Avg Response',
+    total: '18m',
+    accentColor: '#A3FF7A',
+    delta: 'Target < 20m'
+  },
+  {
+    id: 'active-zones',
+    label: 'Active Zones',
+    total: '5 / 5',
+    accentColor: 'rgba(255,255,255,0.6)',
+    delta: 'All sensors responsive'
   }
 ];

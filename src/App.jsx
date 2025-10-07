@@ -14,9 +14,8 @@ const App = () => (
     <div className="mx-auto max-w-6xl space-y-10 px-6 pt-12">
       <Header />
       <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
-        <HeatMap />
+        <HeatMap footer={<FeedbackPanel />} />
         <div className="flex flex-col gap-6">
-          <FeedbackPanel />
           <ScopePanel />
           <QrPanel />
         </div>

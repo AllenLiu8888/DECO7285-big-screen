@@ -1,0 +1,50 @@
+<svg width="1600" height="700" viewBox="0 0 1600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#101828" />
+      <stop offset="100%" stop-color="#1F2937" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="blur" />
+      <feOffset in="blur" dy="8" result="offset" />
+      <feMerge>
+        <feMergeNode in="offset" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      .outline { stroke: rgba(255,255,255,0.32); stroke-width: 4; }
+      .detail { stroke: rgba(255,255,255,0.16); stroke-width: 3; }
+      .label { fill: rgba(255,255,255,0.4); font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 32px; }
+    </style>
+  </defs>
+  <rect x="60" y="60" width="1480" height="580" rx="40" fill="url(#bg)" filter="url(#shadow)" />
+  <rect x="140" y="140" width="1320" height="420" rx="24" stroke="rgba(255,255,255,0.28)" stroke-width="6" fill="rgba(15,23,42,0.6)" />
+
+  <g stroke-linecap="round">
+    <line class="outline" x1="140" y1="200" x2="1460" y2="200" />
+    <line class="outline" x1="140" y1="500" x2="1460" y2="500" />
+    <line class="detail" x1="480" y1="200" x2="480" y2="500" />
+    <line class="detail" x1="820" y1="200" x2="820" y2="500" />
+    <line class="detail" x1="1160" y1="200" x2="1160" y2="500" />
+    <line class="detail" x1="140" y1="350" x2="1460" y2="350" stroke-dasharray="24 24" />
+  </g>
+
+  <g fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="10" stroke-linecap="round">
+    <path d="M220 140 v60" />
+    <path d="M1380 140 v60" />
+    <path d="M220 500 v60" />
+    <path d="M1380 500 v60" />
+  </g>
+
+  <g class="label">
+    <text x="260" y="180">0441</text>
+    <text x="600" y="180">0442</text>
+    <text x="940" y="180">0443</text>
+    <text x="1280" y="180">0444</text>
+    <text x="260" y="540">0439</text>
+    <text x="600" y="540">0440</text>
+    <text x="940" y="540">0445</text>
+    <text x="1280" y="540">0446</text>
+  </g>
+</svg>
