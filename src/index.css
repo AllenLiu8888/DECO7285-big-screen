@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Global styles extend Tailwind utility tokens with project-specific
+ * background gradients and typography tweaks.
+ */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+main {
+  @apply min-h-screen;
+}
+
+/* Custom glass panel styling used across cards */
+.glass-panel {
+  @apply bg-slate-900/60 backdrop-blur-xl border border-slate-800/60 rounded-3xl shadow-glass;
+}
+
+/* QR code checkerboard pattern */
+.qr-block {
+  background-image: linear-gradient(90deg, currentColor 50%, transparent 50%),
+    linear-gradient(currentColor 50%, transparent 50%);
+  background-size: 12px 12px;
+}
